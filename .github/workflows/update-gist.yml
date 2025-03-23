@@ -1,0 +1,25 @@
+name: Update Gist
+
+on:
+  workflow_dispatch:
+    inputs:
+      new_content:
+        description: 'New content for the Gist'
+        required: true
+        default: 'This is the new content for the Gist'
+
+jobs:
+  update_gist:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Update Gist
+        uses: peter-evans/gist-create@v5
+        with:
+          description: 'Updating Gist content'
+          files: |
+            file.txt=${{ github.event.inputs.new_content }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
