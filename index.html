@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Gist Embed</title>
+</head>
+<body>
+
+  <h1>GitHub Gist Embed Example</h1>
+  
+  <!-- Gist Embed -->
+  <script src="https://gist.github.com/banpobanpo/db065eba08ece153bcc51158d1f7b248.js"></script>
+
+  <!-- Textarea and Button to Update Gist -->
+  <h2>Update Gist Content</h2>
+  <textarea id="gist-content" rows="4" cols="50"></textarea><br>
+  <button onclick="updateGist()">Update Gist</button>
+
+  <script>
+    async function updateGist() {
+      const newContent = document.getElementById('gist-content').value;
+      const url = `https://api.github.com/repos/banpobanpo/gisttest/actions/workflows/update-gist.yml/dispatches`;
+
+      const body = {
+        ref: 'main',  // 트리거할 브랜치
+        inputs: {
+          new_content: newContent
+        }
+      };
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(body)
+      });
+
+      if (response.ok) {
+        alert('GitHub Actions가 트리거되었습니다!');
+      } else {
+        alert('GitHub Actions 호출 실패');
+      }
+    }
+  </script>
+
+</body>
+</html>
