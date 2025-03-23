@@ -29,21 +29,26 @@
         }
       };
 
+      try {
       const response = await fetch(url, {
-        method: 'POST',
+        method: 'POST',  // POST 요청
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify(body)  // JSON 형식으로 데이터를 요청 본문에 포함
       });
 
+      // 응답 결과 처리
       if (response.ok) {
         alert('GitHub Actions가 트리거되었습니다!');
       } else {
         alert('GitHub Actions 호출 실패');
       }
+    } catch (error) {
+      console.error('에러 발생:', error);
+      alert('GitHub Actions 호출 중 에러 발생');
     }
+  }
   </script>
 
 </body>
